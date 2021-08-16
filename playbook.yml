@@ -1,0 +1,46 @@
+---
+- hosts: windows-server
+  tasks:
+    - debug:
+        msg: Hello, world!
+
+    - win_chocolatey:
+        name: openjdk
+        state: present
+        version: 16.0.2
+
+    - name: Set Java_home
+      win_environment:
+        state: present
+        name: JAVA_HOME
+        value: 'c:\Program Files\OpenJDK\jdk1-16.0.2'
+        level: machine
+
+    - name: Add Java to path
+      win_path:
+        elements:
+          - 'c:\Program Files\OpenJDK\jdk-16.0.2\bin'
+
+    - name: Ensure docker-cli installed
+      win_chocolatey:
+        name: docker-cli
+        state: present
+        version: 19.03.12
+
+    - name: Ensure docker-compose installed
+      win_chocolatey:
+        name: docker-compose
+        state: present
+        version: 1.29.2
+
+    - name: Ensure cygwin installed
+      win_chocolatey:
+        name: cygwin
+        state: present
+        version: 3.2.0
+
+    - name: Ensure jenkins installed
+      win_chocolatey:
+        name: jenkins
+        state: present
+        version: 2.289.3
